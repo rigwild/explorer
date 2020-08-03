@@ -144,6 +144,12 @@ export default class TransactionAmount extends Vue {
           this.transaction.lockStatus === CoreTransaction.TIMELOCK_REFUND)
       );
     }
+
+    // @ts-ignore
+    if (this.isUnsUpdateService(this.transaction)) {
+      return true;
+    }
+
     return this.transaction.sender === this.$route.params.address;
   }
 
@@ -172,7 +178,9 @@ export default class TransactionAmount extends Vue {
     return (
       this.transaction.recipient === this.$route.params.address &&
       // @ts-ignore
-      this.isTransfer(this.transaction.type, this.transaction.typeGroup)
+      (this.isTransfer(this.transaction.type, this.transaction.typeGroup) ||
+        // @ts-ignore
+        this.isUnsUpdateService(this.transaction))
     );
   }
 }
