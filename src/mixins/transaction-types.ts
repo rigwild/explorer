@@ -1,5 +1,6 @@
 import { CoreTransaction, MagistrateTransaction, TypeGroupTransaction, NftTransaction, UNSTransaction } from "@/enums";
 import { ITransaction } from "@/interfaces";
+import { BigNumber } from "@/utils";
 
 const isCoreTypeGroup = (typeGroup: number): boolean => {
   return typeGroup === TypeGroupTransaction.CORE;
@@ -122,6 +123,11 @@ export default {
     },
     isUnsCertifiedNftUpdate(type: number, typeGroup: number): boolean {
       return isUNSTypeGroup(typeGroup) && type === UNSTransaction.CERTIFIED_NFT_UPDATE;
+    },
+    isUnsUpdateService(transaction: ITransaction): boolean {
+      return (
+        this.isUnsCertifiedNftUpdate(transaction.type, transaction.typeGroup) && transaction.amount !== BigNumber.ZERO
+      );
     },
   },
 };
