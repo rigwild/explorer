@@ -349,17 +349,36 @@ export default {
     OWNER: "Owner",
     CREATION_DATE: "Creation date",
     CATEGORY: "Category",
-    PROPERTIES: "Properties",
-    NO_PROPERTIES: "No properties",
+    USER_PROPERTIES: "User properties",
+    SYSTEM_PROPERTIES: "System properties",
     TYPE: "Type",
     INDIVIDUAL: "Individual",
     ORGANIZATION: "Organization",
     NETWORK: "Network",
     KEY: "Key",
     VALUE: "Value",
+    LIFECYCLE: {
+      LABEL: "Life cycle status",
+      ISSUED: "Issued",
+      MINTED: "Minted",
+      LIVE: "Live",
+      ABORTED: "Aborted",
+      EVERLASTING: "Everlasting",
+    },
   },
 
   UNS: {
     DISCLOSE: "Disclose",
+  },
+
+  BADGES: {
+    LABEL: "Badges",
+    SECOND_PASSPHRASE_KEY: "Second passphrase",
+    SECOND_PASSPHRASE_VALUE: "Enabled",
+    NETWORKPLAYER_KEY: "NetworkPlayer role",
+    NETWORKPLAYER_VALUE: "Delegate",
+    PIONEER_KEY: "Pioneer",
+    PIONEER_INNOVATOR: "Innovator",
+    PIONEER_EARLY: "Early adopter",
   },
 };

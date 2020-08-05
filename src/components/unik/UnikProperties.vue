@@ -15,10 +15,11 @@
 
 <script lang="ts">
 import { Vue, Prop, Component } from "vue-property-decorator";
+import { property } from "./Details.vue";
 
 @Component
 export default class UnikProperties extends Vue {
-  @Prop({ required: true, default: [] }) public properties: Array<{ key: any; value: any }>;
+  @Prop({ required: true, default: [] }) public properties: property[];
 
   get columns() {
     const columns = [
