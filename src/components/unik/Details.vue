@@ -21,45 +21,36 @@
         </div>
       </div>
 
-      <div class="list-row-border-b-no-wrap">
+      <div class="list-row">
         <div class="mr-4">{{ $t("UNIK.LIFECYCLE.LABEL") }}</div>
         <div>{{ $t(lifeCycleStatus) }}</div>
       </div>
     </div>
 
-    <div v-if="getBadges && badges.length > 0" class="px-5 sm:px-10">
-      <UnikBadges :badges="badges" />
-    </div>
+    <UnikProperties v-if="isDisplayed(getBadges)" :properties="badges" :title="$t('BADGES.LABEL')" />
 
-    <div v-if="getUserProperties && userProperties.length > 0" class="px-5 sm:px-10">
-      <div class="list-row">
-        <div class="mr-4">{{ $t("UNIK.USER_PROPERTIES") }}</div>
-      </div>
-      <div class="py-2">
-        <UnikProperties :properties="userProperties" />
-      </div>
-    </div>
+    <UnikProperties
+      v-if="isDisplayed(getUserProperties)"
+      :properties="userProperties"
+      :title="$t('UNIK.USER_PROPERTIES')"
+    />
 
-    <div v-if="getSystemProperties && systemProperties.length > 0" class="px-5 sm:px-10">
-      <div class="list-row">
-        <div class="mr-4">{{ $t("UNIK.SYSTEM_PROPERTIES") }}</div>
-      </div>
-      <div class="py-2">
-        <UnikProperties :properties="systemProperties" />
-      </div>
-    </div>
+    <UnikProperties
+      v-if="isDisplayed(getSystemProperties)"
+      :properties="systemProperties"
+      :title="$t('UNIK.SYSTEM_PROPERTIES')"
+    />
   </section>
 </template>
 
 <script lang="ts">
 import { Vue, Prop, Component } from "vue-property-decorator";
 import UnikProperties from "@/components/unik/UnikProperties.vue";
-import UnikBadges from "@/components/unik/UnikBadges.vue";
 
 export type property = { key: string; value: string };
 
 @Component({
-  components: { UnikProperties, UnikBadges },
+  components: { UnikProperties },
 })
 export default class UnikDetails extends Vue {
   @Prop({ required: true, default: {} }) public unik: any;
@@ -91,7 +82,9 @@ export default class UnikDetails extends Vue {
   }
 
   get getBadges(): property[] {
-    this.badges = Object.values(this.unik.properties).filter((entry: property) => /^Badges\/.*/.test(entry.key));
+    this.badges = Object.values(this.unik.properties)
+      .filter((entry: property) => /^Badges\/.*/.test(entry.key))
+      .filter((entry: property) => entry.value !== "false");
     return this.badges;
   }
 
@@ -109,6 +102,10 @@ export default class UnikDetails extends Vue {
         !/^Badges\/.*/.test(entry.key) && !/^usr\/.*/.test(entry.key) && entry.key !== "LifeCycle/Status",
     );
     return this.systemProperties;
+  }
+
+  private isDisplayed(properties: property[]) {
+    return properties && properties.length > 0;
   }
 }
 </script>

@@ -208,6 +208,10 @@ th.not-sortable:hover {
   @apply .list-row-border-b .flex-no-wrap;
 }
 
+.list-row-border-t-no-wrap {
+  @apply .list-row-border-t .flex-no-wrap;;
+}
+
 .row-mobile {
   @apply .px-5 .py-4;
 }
