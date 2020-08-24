@@ -46,6 +46,7 @@
 <script lang="ts">
 import { Vue, Prop, Component } from "vue-property-decorator";
 import UnikProperties from "@/components/unik/UnikProperties.vue";
+import { LIFE_CYCLE_PROPERTY_KEY, LifeCycleGrades } from "@uns/ts-sdk/dist/types";
 
 export type property = { key: string; value: string };
 
@@ -61,19 +62,19 @@ export default class UnikDetails extends Vue {
 
   get lifeCycleStatus(): string {
     const status = Object.values(this.unik.properties).find(
-      (entry: property) => entry.key === "LifeCycle/Status",
+      (entry: property) => entry.key === LIFE_CYCLE_PROPERTY_KEY,
     ) as property;
 
-    switch (status.value) {
-      case "1":
+    switch (parseInt(status.value)) {
+      case LifeCycleGrades.ISSUED:
         return "UNIK.LIFECYCLE.ISSUED";
-      case "2":
+      case LifeCycleGrades.MINTED:
         return "UNIK.LIFECYCLE.MINTED";
-      case "3":
+      case LifeCycleGrades.LIVE:
         return "UNIK.LIFECYCLE.LIVE";
-      case "4":
+      case LifeCycleGrades.ABORTED:
         return "UNIK.LIFECYCLE.ABORTED";
-      case "10":
+      case LifeCycleGrades.EVERLASTING:
         return "UNIK.LIFECYCLE.EVERLASTING";
       // should not happen
       default:
@@ -99,7 +100,7 @@ export default class UnikDetails extends Vue {
   get getSystemProperties(): property[] {
     this.systemProperties = Object.values(this.unik.properties).filter(
       (entry: property) =>
-        !/^Badges\/.*/.test(entry.key) && !/^usr\/.*/.test(entry.key) && entry.key !== "LifeCycle/Status",
+        !/^Badges\/.*/.test(entry.key) && !/^usr\/.*/.test(entry.key) && entry.key !== LIFE_CYCLE_PROPERTY_KEY,
     );
     return this.systemProperties;
   }
