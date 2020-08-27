@@ -1,3 +1,5 @@
+import { BADGE_PIONEER_KEY } from "@uns/ts-sdk";
+
 export default {
   COMMON: {
     BALANCE: "Balance",
@@ -371,14 +373,25 @@ export default {
     DISCLOSE: "Disclose",
   },
 
-  BADGES: {
-    LABEL: "Badges",
-    SECOND_PASSPHRASE_KEY: "Second passphrase",
-    SECOND_PASSPHRASE_VALUE: "Enabled",
-    NETWORKPLAYER_KEY: "NetworkPlayer role",
-    NETWORKPLAYER_VALUE: "Delegate",
-    PIONEER_KEY: "Pioneer",
-    PIONEER_INNOVATOR: "Innovator",
-    PIONEER_EARLY: "Early adopter",
+  PROPERTIES: {
+    BADGES: "Badges",
+    "Badges/Security/SecondPassphrase": {
+      key: "Second passphrase",
+      value: "Enabled",
+    },
+    "Badges/NP/Delegate": {
+      key: "NetworkPlayer role",
+      value: "Delegate",
+    },
+    [BADGE_PIONEER_KEY]: {
+      key: "Pioneer",
+      innovator: "Innovator",
+      early: "Early adopter",
+    },
+    "Authentications/CosmicNonce": {
+      key: "Cosmic nonce",
+    },
+    VERIFIED_URL: "Verified URL",
+    VERIFIED_URL_PROOF: "Proof of verification",
   },
 };
