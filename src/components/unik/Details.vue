@@ -10,7 +10,7 @@
 
       <div class="list-row-border-b">
         <div class="mr-4">{{ $t("UNIK.TYPE") }}</div>
-        {{ $t(unik.type) }}
+        {{ $t(`UNIK.${unik.type}`) }}
       </div>
 
       <div class="list-row-border-b-no-wrap">
@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <UnikProperties v-if="isDisplayed(getBadges)" :properties="badges" :title="$t('BADGES.LABEL')" />
+    <UnikProperties v-if="isDisplayed(getBadges)" :properties="badges" :title="$t('PROPERTIES.BADGES')" />
 
     <UnikProperties
       v-if="isDisplayed(getUserProperties)"

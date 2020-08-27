@@ -21,7 +21,10 @@
 <script lang="ts">
 import { Vue, Prop, Component } from "vue-property-decorator";
 import { property } from "./Details.vue";
-import { TranslateResult } from "vue-i18n";
+import { VERIFIED_URL_KEY_PREFIX, BADGE_PIONEER_KEY, PioneerBadgeGrades } from "@uns/ts-sdk";
+
+const urlVerifiedRegex = new RegExp(`^${VERIFIED_URL_KEY_PREFIX}[^/]+$`);
+const urlVerifiedProofRegex = new RegExp(`^${VERIFIED_URL_KEY_PREFIX}.+/proof$`);
 
 @Component
 export default class UnikProperties extends Vue {
@@ -46,30 +49,25 @@ export default class UnikProperties extends Vue {
     return columns;
   }
 
-  private getValue(entry: property): string | TranslateResult {
-    switch (entry.key) {
-      case "Badges/Security/SecondPassphrase":
-        return this.$t("BADGES.SECOND_PASSPHRASE_VALUE");
-      case "Badges/NP/Delegate":
-        return this.$t("BADGES.NETWORKPLAYER_VALUE");
-      case "Badges/Pioneer":
-        return entry.value === "1" ? this.$t("BADGES.PIONEER_INNOVATOR") : this.$t("BADGES.PIONEER_EARLY");
-      default:
-        return entry.value;
+  private getValue(entry: property): string {
+    if (entry.key === BADGE_PIONEER_KEY) {
+      return entry.value === PioneerBadgeGrades.INNOVATOR.toString()
+        ? this.$t(`PROPERTIES.${BADGE_PIONEER_KEY}.innovator`).toString()
+        : this.$t(`PROPERTIES.${BADGE_PIONEER_KEY}.early`).toString();
     }
+    return this.$te(`PROPERTIES.${entry.key}.value`)
+      ? this.$t(`PROPERTIES.${entry.key}.value`).toString()
+      : entry.value;
   }
 
-  private getKey(entry: property): string | TranslateResult {
-    switch (entry.key) {
-      case "Badges/Security/SecondPassphrase":
-        return this.$t("BADGES.SECOND_PASSPHRASE_KEY");
-      case "Badges/NP/Delegate":
-        return this.$t("BADGES.NETWORKPLAYER_KEY");
-      case "Badges/Pioneer":
-        return this.$t("BADGES.PIONEER_KEY");
-      default:
-        return entry.key;
+  private getKey(entry: property): string {
+    if (urlVerifiedRegex.test(entry.key)) {
+      return this.$t("PROPERTIES.VERIFIED_URL").toString();
     }
+    if (urlVerifiedProofRegex.test(entry.key)) {
+      return this.$t("PROPERTIES.VERIFIED_URL_PROOF").toString();
+    }
+    return this.$te(`PROPERTIES.${entry.key}.key`) ? this.$t(`PROPERTIES.${entry.key}.key`).toString() : entry.key;
   }
 }
 </script>
