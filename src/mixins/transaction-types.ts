@@ -116,7 +116,7 @@ export default {
       return isUNSTypeGroup(typeGroup) && type === UNSTransaction.CERTIFIED_NFT_MINT;
     },
     isVoucherUnsCertifiedNftMint(transaction: ITransaction): boolean {
-      return (
+      return !!(
         this.isUnsCertifiedNftMint(transaction.type, transaction.typeGroup) &&
         transaction.asset.nft.unik.properties.UnikVoucherId
       );
